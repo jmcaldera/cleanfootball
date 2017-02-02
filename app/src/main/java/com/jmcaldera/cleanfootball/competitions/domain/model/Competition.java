@@ -45,54 +45,54 @@ public class Competition {
     }
 
     @NonNull
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(@NonNull int id) {
+    public void setId(@NonNull int id) {
         this.mId = id;
     }
 
     @Nullable
-    public String getmCaption() {
+    public String getCaption() {
         return mCaption;
     }
 
-    public void setmCaption(@Nullable String caption) {
+    public void setCaption(@Nullable String caption) {
         this.mCaption = caption;
     }
 
     @Nullable
-    public String getmLeague() {
+    public String getLeague() {
         return mLeague;
     }
 
-    public void setmLeague(@Nullable String league) {
+    public void setLeague(@Nullable String league) {
         this.mLeague = league;
     }
 
     @Nullable
-    public String getmYear() {
+    public String getYear() {
         return mYear;
     }
 
-    public void setmYear(@Nullable String year) {
+    public void setYear(@Nullable String year) {
         this.mYear = year;
     }
 
-    public int getmCurrentMatchday() {
+    public int getCurrentMatchday() {
         return mCurrentMatchday;
     }
 
-    public void setmCurrentMatchday(int currentMatchday) {
+    public void setCurrentMatchday(int currentMatchday) {
         this.mCurrentMatchday = currentMatchday;
     }
 
-    public String getmLastUpdated() {
+    public String getLastUpdated() {
         return mLastUpdated;
     }
 
-    public void setmLastUpdated(String lastUpdated) {
+    public void setLastUpdated(String lastUpdated) {
         this.mLastUpdated = lastUpdated;
     }
 
