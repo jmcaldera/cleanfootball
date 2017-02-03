@@ -20,4 +20,10 @@ public interface CompetitionsDataSource {
     }
 
     void getCompetitions(@NonNull LoadCompetitionsCallback callback);
+
+    void saveCompetition(@NonNull Competition competition);
+
+    void refreshCompetitions();
+
+    void deleteAllCompetitions();
 }
