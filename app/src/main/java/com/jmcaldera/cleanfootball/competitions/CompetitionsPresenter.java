@@ -89,6 +89,6 @@ public class CompetitionsPresenter implements CompetitionsContract.Presenter {
     @Override
     public void openCompetition(@NonNull Competition competition) {
         checkNotNull(competition, "competicion no puede ser null");
-
+        mCompetitionsView.showCompetitionsDetails(competition.getId());
     }
 }
