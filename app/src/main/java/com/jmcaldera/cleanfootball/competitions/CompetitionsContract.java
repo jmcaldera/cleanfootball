@@ -24,6 +24,8 @@ public interface CompetitionsContract {
 
         void showLoadingCompetitionsError();
 
+        void showNoCompetitions();
+
         boolean isActive();
 
     }

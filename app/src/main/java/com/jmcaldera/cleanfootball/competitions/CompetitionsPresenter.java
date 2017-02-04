@@ -6,11 +6,10 @@ import com.jmcaldera.cleanfootball.UseCase;
 import com.jmcaldera.cleanfootball.UseCaseHandler;
 import com.jmcaldera.cleanfootball.competitions.domain.model.Competition;
 import com.jmcaldera.cleanfootball.competitions.domain.usecase.GetCompetitions;
+import com.jmcaldera.cleanfootball.data.CompetitionsDataSource;
 
 import java.util.List;
 
-import static android.R.attr.process;
-import static android.R.string.no;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -44,8 +43,13 @@ public class CompetitionsPresenter implements CompetitionsContract.Presenter {
     @Override
     public void loadCompetitions(boolean forceUpdate) {
         loadCompetitions(forceUpdate || mFirstLoad, true);
+        mFirstLoad = false;
     }
 
+    /**
+     * @param forceUpdate   Pass in true to refresh the data in the {@link CompetitionsDataSource}
+     * @param showLoading Pass in true to display a loading icon in the UI
+     */
     private void loadCompetitions(boolean forceUpdate, final boolean showLoading) {
         if (showLoading) {
             mCompetitionsView.setLoadingIndicator(true);
