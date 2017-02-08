@@ -83,7 +83,11 @@ public class CompetitionsPresenter implements CompetitionsContract.Presenter {
     }
 
     private void processCompetitions(List<Competition> competitions) {
-        mCompetitionsView.showCompetitions(competitions);
+        if (competitions.isEmpty()) {
+            mCompetitionsView.showNoCompetitions();
+        } else {
+            mCompetitionsView.showCompetitions(competitions);
+        }
     }
 
     @Override
