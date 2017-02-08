@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jmcaldera.cleanfootball.R;
+import com.jmcaldera.cleanfootball.util.ActivityUtils;
+import com.jmcaldera.cleanfootball.util.Injection;
 
 /**
  * Se mostrara la lista de competiciones segun la respuesta de
@@ -14,9 +16,28 @@ import com.jmcaldera.cleanfootball.R;
  */
 public class CompetitionsActivity extends AppCompatActivity {
 
+    private CompetitionsPresenter mCompetitionsPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_competitions);
+
+        // Toolbar
+        // Drawer
+
+        CompetitionsFragment competitionsFragment =
+                (CompetitionsFragment) getSupportFragmentManager().findFragmentById(R.id.comp_content_frame);
+        if (competitionsFragment == null) {
+            competitionsFragment = CompetitionsFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    competitionsFragment, R.id.comp_content_frame);
+        }
+
+        // crear el presenter
+        mCompetitionsPresenter = new CompetitionsPresenter(
+                competitionsFragment,
+                Injection.provideGetCompetitions(getApplicationContext()),
+                Injection.provideUseCaseHandler());
     }
 }
