@@ -1,6 +1,7 @@
 package com.jmcaldera.cleanfootball.data;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.jmcaldera.cleanfootball.competitions.domain.model.Competition;
 
@@ -16,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 
 public class CompetitionsRepository implements CompetitionsDataSource {
+
+    private static final String TAG = CompetitionsRepository.class.getSimpleName();
 
     private static CompetitionsRepository INSTANCE = null;
 
@@ -72,6 +75,7 @@ public class CompetitionsRepository implements CompetitionsDataSource {
 
         if (mCachedCompetitions != null && !mCacheIsDirty) {
             callback.onCompetitionsLoaded(new ArrayList<>(mCachedCompetitions.values()));
+            Log.d(TAG, "Competitions loaded from Cache");
             return;
         }
 
@@ -85,6 +89,7 @@ public class CompetitionsRepository implements CompetitionsDataSource {
                 public void onCompetitionsLoaded(List<Competition> competitions) {
                     refreshCache(competitions);
                     callback.onCompetitionsLoaded(new ArrayList<>(mCachedCompetitions.values()));
+                    Log.d(TAG, "Competitions loaded form LocalDataSource");
                 }
 
                 @Override
@@ -128,6 +133,7 @@ public class CompetitionsRepository implements CompetitionsDataSource {
                 refreshCache(competitions);
                 refreshLocalDataSource(competitions);
                 callback.onCompetitionsLoaded(new ArrayList<>(mCachedCompetitions.values()));
+                Log.d(TAG, "Competitions loaded from RemoteDataSource");
             }
 
             @Override

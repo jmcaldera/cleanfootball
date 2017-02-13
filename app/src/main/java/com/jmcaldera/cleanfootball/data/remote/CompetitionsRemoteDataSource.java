@@ -1,6 +1,7 @@
 package com.jmcaldera.cleanfootball.data.remote;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 
 import com.google.common.collect.Lists;
@@ -54,7 +55,8 @@ public class CompetitionsRemoteDataSource implements CompetitionsDataSource {
      */
     @Override
     public void getCompetitions(@NonNull final LoadCompetitionsCallback callback) {
-        new Handler().postDelayed(new Runnable() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 callback.onCompetitionsLoaded(Lists.newArrayList(COMPETITIONS_SERVICE_DATA.values()));
