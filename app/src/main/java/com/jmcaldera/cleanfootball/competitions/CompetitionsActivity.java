@@ -27,11 +27,11 @@ public class CompetitionsActivity extends AppCompatActivity {
         // Drawer
 
         CompetitionsFragment competitionsFragment =
-                (CompetitionsFragment) getSupportFragmentManager().findFragmentById(R.id.comp_content_frame);
+                (CompetitionsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (competitionsFragment == null) {
             competitionsFragment = CompetitionsFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                    competitionsFragment, R.id.comp_content_frame);
+                    competitionsFragment, R.id.contentFrame);
         }
 
         // crear el presenter
