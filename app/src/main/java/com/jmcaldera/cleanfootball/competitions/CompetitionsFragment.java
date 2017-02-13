@@ -1,5 +1,6 @@
 package com.jmcaldera.cleanfootball.competitions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jmcaldera.cleanfootball.R;
+import com.jmcaldera.cleanfootball.competitiondetails.CompetitionDetailsActivity;
 import com.jmcaldera.cleanfootball.competitions.domain.model.Competition;
 import com.jmcaldera.cleanfootball.util.ScrollChildSwipeRefreshLayout;
 
@@ -151,6 +153,9 @@ public class CompetitionsFragment extends Fragment implements CompetitionsContra
         // Start activity con intent.putExtra(id)
         // TODO: startActivity
         Log.d(TAG , "Click en competition: " + id);
+        Intent intent = new Intent(getContext(), CompetitionDetailsActivity.class);
+        intent.putExtra(CompetitionDetailsActivity.EXTRA_COMPETITION_ID, id);
+        startActivity(intent);
     }
 
     @Override
