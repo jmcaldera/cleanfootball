@@ -4,9 +4,11 @@
     <item
         android:id="@+id/action_standings"
         android:title="Posiciones"
+        android:icon="@drawable/ic_standings_24dp"
         android:enabled="true"/>
     <item
         android:id="@+id/action_fixtures"
         android:title="Calendario"
+        android:icon="@drawable/ic_calendar_24dp"
         android:enabled="true"/>
 </menu>
