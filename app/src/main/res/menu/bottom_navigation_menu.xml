@@ -2,13 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_standings"
+        android:id="@+id/action_league_table"
         android:title="Posiciones"
-        android:icon="@drawable/ic_standings_24dp"
-        android:enabled="true"/>
+        android:icon="@drawable/ic_standings_24dp" />
     <item
         android:id="@+id/action_fixtures"
         android:title="Calendario"
-        android:icon="@drawable/ic_calendar_24dp"
-        android:enabled="true"/>
+        android:icon="@drawable/ic_calendar_24dp" />
+    <item
+        android:id="@+id/action_teams"
+        android:title="Equipos" />
 </menu>
