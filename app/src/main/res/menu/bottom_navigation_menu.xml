@@ -3,13 +3,14 @@
 
     <item
         android:id="@+id/action_league_table"
-        android:title="Posiciones"
+        android:title="@string/standings_title"
         android:icon="@drawable/ic_standings_24dp" />
     <item
         android:id="@+id/action_fixtures"
-        android:title="Calendario"
+        android:title="@string/calendar_title"
         android:icon="@drawable/ic_calendar_24dp" />
     <item
         android:id="@+id/action_teams"
-        android:title="Equipos" />
+        android:title="@string/teams_title"
+        android:icon="@drawable/ic_teams"/>
 </menu>

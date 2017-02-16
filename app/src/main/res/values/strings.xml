@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CleanFootball</string>
+
+    <!--Bottom Nav View-->
+    <string name="standings_title">Posiciones</string>
+    <string name="calendar_title">Calendario</string>
+    <string name="teams_title">Equipos</string>
 </resources>
