@@ -28,6 +28,8 @@ public interface CompetitionDetailsContract {
 
         void loadFixtures(boolean forceUpdate);
 
+        void loadTeams(boolean forceUpdate);
+
         // TODO: crear team model
         void openTeam();
     }
