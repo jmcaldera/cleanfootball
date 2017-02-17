@@ -16,27 +16,22 @@ import com.jmcaldera.cleanfootball.R;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Created by jmcaldera on 12/02/17.
+ * Created by jmcaldera on 16/02/17.
  */
 
-public class StandingsDetailFragment extends Fragment implements CompetitionDetailsContract.View{
+public class FixturesDetailFragment extends Fragment implements CompetitionDetailsContract.View {
 
     @NonNull
     private static final String ARGUMENT_COMPETITION_ID = "COMP_ID";
 
     private CompetitionDetailsContract.Presenter mPresenter;
 
-    public static StandingsDetailFragment newInstance(int id) {
+    public static FixturesDetailFragment newInstance(int id) {
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_COMPETITION_ID, id);
-        StandingsDetailFragment fragment = new StandingsDetailFragment();
+        FixturesDetailFragment fragment = new FixturesDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -46,7 +41,7 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
     }
 
     @Override
-    public void setPresenter(@NonNull CompetitionDetailsContract.Presenter presenter) {
+    public void setPresenter(CompetitionDetailsContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
 
@@ -55,18 +50,16 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.standings_frag, container, false);
-
         TextView textView = (TextView) root.findViewById(R.id.stand_text);
-        textView.setText("Standings");
+        textView.setText("Fixtures");
 
         Button button = (Button) root.findViewById(R.id.stand_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.loadStandings(true);
+                mPresenter.openTeam();
             }
         });
-
         return root;
     }
 
@@ -77,19 +70,19 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
 
     @Override
     public void showStandings() {
-        if (getView() == null) {
-            return;
-        }
-        Snackbar.make(getView(), "click en Standings", Snackbar.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void showFixtures() {
-
+        if (getView() == null) {
+            return;
+        }
+        Snackbar.make(getView(), "click en fixtures", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean isActive() {
-        return isAdded();
+        return false;
     }
 }
