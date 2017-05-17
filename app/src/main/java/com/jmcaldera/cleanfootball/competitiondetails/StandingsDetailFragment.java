@@ -26,6 +26,8 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
 
     private CompetitionDetailsContract.Presenter mPresenter;
 
+    public StandingsDetailFragment() {}
+
     public static StandingsDetailFragment newInstance(int id) {
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_COMPETITION_ID, id);
@@ -56,10 +58,10 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.standings_frag, container, false);
 
-        TextView textView = (TextView) root.findViewById(R.id.stand_text);
+        TextView textView = (TextView) root.findViewById(R.id.standings_text);
         textView.setText("Standings");
 
-        Button button = (Button) root.findViewById(R.id.stand_button);
+        Button button = (Button) root.findViewById(R.id.standings_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
