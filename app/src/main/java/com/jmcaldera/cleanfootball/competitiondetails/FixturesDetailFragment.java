@@ -26,6 +26,8 @@ public class FixturesDetailFragment extends Fragment implements CompetitionDetai
 
     private CompetitionDetailsContract.Presenter mPresenter;
 
+    public FixturesDetailFragment() {}
+
     public static FixturesDetailFragment newInstance(int id) {
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_COMPETITION_ID, id);
@@ -49,11 +51,11 @@ public class FixturesDetailFragment extends Fragment implements CompetitionDetai
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.standings_frag, container, false);
-        TextView textView = (TextView) root.findViewById(R.id.stand_text);
+        View root = inflater.inflate(R.layout.fixtures_frag, container, false);
+        TextView textView = (TextView) root.findViewById(R.id.fixtures_text);
         textView.setText("Fixtures");
 
-        Button button = (Button) root.findViewById(R.id.stand_button);
+        Button button = (Button) root.findViewById(R.id.fixtures_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

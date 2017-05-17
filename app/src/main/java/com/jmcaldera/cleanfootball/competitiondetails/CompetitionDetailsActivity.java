@@ -42,6 +42,15 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // TODO: probar esta parte sin invocar al supportFragmentManager
+        // Agrega el primer fragment por defecto
+        StandingsDetailFragment standingsFragment =
+                (StandingsDetailFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (standingsFragment != null) {
+            standingsFragment = StandingsDetailFragment.newInstance(competitionId);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), standingsFragment, R.id.contentFrame);
+        }
     }
 
     private void selectFragment(MenuItem item) {
