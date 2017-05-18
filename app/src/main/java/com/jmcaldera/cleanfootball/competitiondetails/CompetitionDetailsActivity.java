@@ -26,7 +26,7 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
 
 
         // Toolbar
-
+        // TODO: Setear titulo del actionBar al caption de la liga
         // Get id
         competitionId = getIntent().getIntExtra(EXTRA_COMPETITION_ID, 0);
         Log.d(TAG, "Competition Id is: " + competitionId);
