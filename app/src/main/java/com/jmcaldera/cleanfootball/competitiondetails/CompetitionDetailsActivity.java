@@ -17,8 +17,6 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
 
     public static final String EXTRA_COMPETITION_ID = "COMP_ID";
 
-    private StandingsDetailFragment standingsFragment;
-
     int competitionId;
 
     @Override
@@ -43,14 +41,8 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: probar esta parte sin invocar al supportFragmentManager
-        // Agrega el primer fragment por defecto
-        StandingsDetailFragment standingsFragment =
-                (StandingsDetailFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (standingsFragment != null) {
-            standingsFragment = StandingsDetailFragment.newInstance(competitionId);
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), standingsFragment, R.id.contentFrame);
-        }
+        StandingsDetailFragment standingsFragment = StandingsDetailFragment.newInstance(competitionId);
+        ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), standingsFragment, R.id.contentFrame);
     }
 
     private void selectFragment(MenuItem item) {
@@ -68,7 +60,7 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
                 break;
         }
         if (fragment != null) {
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
+            ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
     }
 }

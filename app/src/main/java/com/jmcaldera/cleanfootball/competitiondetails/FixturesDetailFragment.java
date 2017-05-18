@@ -21,6 +21,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FixturesDetailFragment extends Fragment implements CompetitionDetailsContract.View {
 
+    private static final String TAG = FixturesDetailFragment.class.getSimpleName();
+
     @NonNull
     private static final String ARGUMENT_COMPETITION_ID = "COMP_ID";
 
@@ -39,7 +41,7 @@ public class FixturesDetailFragment extends Fragment implements CompetitionDetai
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+//        mPresenter.start();
     }
 
     @Override

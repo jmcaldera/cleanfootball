@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 
 public class StandingsDetailFragment extends Fragment implements CompetitionDetailsContract.View{
+
+    private static final String TAG = StandingsDetailFragment.class.getSimpleName();
 
     @NonNull
     private static final String ARGUMENT_COMPETITION_ID = "COMP_ID";
@@ -44,7 +47,7 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+//        mPresenter.start();
     }
 
     @Override
