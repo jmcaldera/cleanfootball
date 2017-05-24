@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jmcaldera.cleanfootball.R;
 
@@ -47,7 +48,26 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
     @Override
     public void onResume() {
         super.onResume();
-//        mPresenter.start();
+        mPresenter.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "Standings onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "Standings onStop");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "Standings onDestroy");
+//        mPresenter.unbind();
     }
 
     @Override
@@ -85,7 +105,8 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
         if (getView() == null) {
             return;
         }
-        Snackbar.make(getView(), "click en Standings", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(getView(), "click en Standings", Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(getView().getContext(), "click en Standings", Toast.LENGTH_SHORT).show();
     }
 
     @Override

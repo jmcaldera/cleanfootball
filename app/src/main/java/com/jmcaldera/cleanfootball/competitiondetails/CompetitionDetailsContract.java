@@ -24,6 +24,10 @@ public interface CompetitionDetailsContract {
 
     interface Presenter extends BasePresenter {
 
+        void bind(View view);
+
+        void unbind();
+
         void loadStandings(boolean forceUpdate);
 
         void loadFixtures(boolean forceUpdate);

@@ -19,6 +19,8 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
 
     int competitionId;
 
+    private CompetitionDetailsPresenter mDetailsPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,17 +45,39 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
 
         StandingsDetailFragment standingsFragment = StandingsDetailFragment.newInstance(competitionId);
         ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), standingsFragment, R.id.contentFrame);
+
+//        mDetailsPresenter = new CompetitionDetailsPresenter(standingsFragment);
+        mDetailsPresenter = new CompetitionDetailsPresenter();
+        mDetailsPresenter.bind(standingsFragment);
+        Log.d(TAG, "CompActivity OnCreate");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "CompActivity OnPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "CompActivity OnDestroy");
+        mDetailsPresenter.unbind();
     }
 
     private void selectFragment(MenuItem item) {
         Fragment fragment = null;
-
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         switch (item.getItemId()) {
             case R.id.action_league_table:
-                fragment = StandingsDetailFragment.newInstance(competitionId);
+//                if(!(currentFragment instanceof StandingsDetailFragment)) {
+                    fragment = StandingsDetailFragment.newInstance(competitionId);
+//                }
                 break;
             case R.id.action_fixtures:
-                fragment = FixturesDetailFragment.newInstance(competitionId);
+//                if(!(currentFragment instanceof FixturesDetailFragment)) {
+                    fragment = FixturesDetailFragment.newInstance(competitionId);
+//                }
                 break;
             case R.id.action_teams:
 
@@ -62,5 +86,8 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
         if (fragment != null) {
             ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
+        mDetailsPresenter.unbind();
+        mDetailsPresenter.bind((CompetitionDetailsContract.View)fragment);
+        Log.d(TAG, "CompAct selectFrag");
     }
 }
