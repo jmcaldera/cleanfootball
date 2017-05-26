@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jmcaldera.cleanfootball.R;
 
@@ -42,25 +43,14 @@ public class FixturesDetailFragment extends Fragment implements CompetitionDetai
     @Override
     public void onResume() {
         super.onResume();
-//        mPresenter.start();
+        mPresenter.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.d(TAG, "Fixtures onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "Fixtures onStop");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "Fixtures onDestroy");
+        mPresenter.stop();
     }
 
     @Override
@@ -101,7 +91,8 @@ public class FixturesDetailFragment extends Fragment implements CompetitionDetai
         if (getView() == null) {
             return;
         }
-        Snackbar.make(getView(), "click en fixtures", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(getView(), "click en fixtures", Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(getView().getContext(), "click en fixtures", Toast.LENGTH_SHORT).show();
     }
 
     @Override

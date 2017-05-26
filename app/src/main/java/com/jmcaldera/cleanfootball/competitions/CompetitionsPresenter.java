@@ -41,6 +41,11 @@ public class CompetitionsPresenter implements CompetitionsContract.Presenter {
     }
 
     @Override
+    public void stop() {
+        // Hacer view null?
+    }
+
+    @Override
     public void loadCompetitions(boolean forceUpdate) {
         loadCompetitions(forceUpdate || mFirstLoad, true);
         mFirstLoad = false;

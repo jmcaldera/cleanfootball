@@ -59,20 +59,6 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "Standings onStop");
-//        mPresenter = null;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "Standings onDestroy");
-//        mPresenter.unbind();
-    }
-
-    @Override
     public void setPresenter(@NonNull CompetitionDetailsContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
