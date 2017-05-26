@@ -16,7 +16,7 @@ public class CompetitionDetailsPresenter implements CompetitionDetailsContract.P
 
     public CompetitionDetailsPresenter(CompetitionDetailsContract.View standingsView) {
         this.mStandingsView = checkNotNull(standingsView, "standingsView no puede ser null");
-//        mStandingsView.setPresenter(this);
+        mStandingsView.setPresenter(this);
     }
 
     public CompetitionDetailsPresenter(CompetitionDetailsContract.View standingsView,
@@ -25,14 +25,19 @@ public class CompetitionDetailsPresenter implements CompetitionDetailsContract.P
         this.mFixturesView = checkNotNull(fixturesView, "fixturesView no puede ser null");
     }
 
-    @Override
-    public void bind(CompetitionDetailsContract.View view) {
-        this.mStandingsView = view;
-        this.mStandingsView.setPresenter(this);
-    }
+//    @Override
+//    public void bind(CompetitionDetailsContract.View view) {
+//        this.mStandingsView = view;
+//        this.mStandingsView.setPresenter(this);
+//    }
+//
+//    @Override
+//    public void unbind() {
+//        this.mStandingsView = null;
+//    }
 
     @Override
-    public void unbind() {
+    public void stop() {
         this.mStandingsView = null;
     }
 

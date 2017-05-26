@@ -19,7 +19,7 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
 
     int competitionId;
 
-    private CompetitionDetailsPresenter mDetailsPresenter;
+//    private CompetitionDetailsPresenter mDetailsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +47,9 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
         ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), standingsFragment, R.id.contentFrame);
 
 //        mDetailsPresenter = new CompetitionDetailsPresenter(standingsFragment);
-        mDetailsPresenter = new CompetitionDetailsPresenter();
-        mDetailsPresenter.bind(standingsFragment);
+        new CompetitionDetailsPresenter(standingsFragment);
+//        mDetailsPresenter = new CompetitionDetailsPresenter();
+//        mDetailsPresenter.bind(standingsFragment);
         Log.d(TAG, "CompActivity OnCreate");
     }
 
@@ -62,7 +63,7 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "CompActivity OnDestroy");
-        mDetailsPresenter.unbind();
+//        mDetailsPresenter.unbind();
     }
 
     private void selectFragment(MenuItem item) {
@@ -86,8 +87,9 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
         if (fragment != null) {
             ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
-        mDetailsPresenter.unbind();
-        mDetailsPresenter.bind((CompetitionDetailsContract.View)fragment);
+//        mDetailsPresenter.unbind();
+//        mDetailsPresenter.bind((CompetitionDetailsContract.View)fragment);
+        new CompetitionDetailsPresenter((CompetitionDetailsContract.View) fragment);
         Log.d(TAG, "CompAct selectFrag");
     }
 }

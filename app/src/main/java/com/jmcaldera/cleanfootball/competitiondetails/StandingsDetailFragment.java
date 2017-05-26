@@ -55,12 +55,14 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
     public void onPause() {
         super.onPause();
         Log.d(TAG, "Standings onPause");
+        mPresenter.stop();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         Log.d(TAG, "Standings onStop");
+//        mPresenter = null;
     }
 
     @Override
