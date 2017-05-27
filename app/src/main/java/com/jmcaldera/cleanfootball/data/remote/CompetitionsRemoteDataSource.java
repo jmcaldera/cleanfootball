@@ -3,14 +3,21 @@ package com.jmcaldera.cleanfootball.data.remote;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.common.collect.Lists;
 import com.jmcaldera.cleanfootball.competitions.domain.model.Competition;
 import com.jmcaldera.cleanfootball.data.CompetitionsDataSource;
+import com.jmcaldera.cleanfootball.data.remote.api.ApiClient;
+import com.jmcaldera.cleanfootball.data.remote.api.ApiEndpoints;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.R.attr.id;
 
@@ -19,6 +26,8 @@ import static android.R.attr.id;
  */
 
 public class CompetitionsRemoteDataSource implements CompetitionsDataSource {
+
+    private static final String TAG = CompetitionsRemoteDataSource.class.getSimpleName();
 
     private static CompetitionsRemoteDataSource INSTANCE;
 
@@ -55,13 +64,41 @@ public class CompetitionsRemoteDataSource implements CompetitionsDataSource {
      */
     @Override
     public void getCompetitions(@NonNull final LoadCompetitionsCallback callback) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
+//        Handler handler = new Handler(Looper.getMainLooper());
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                callback.onCompetitionsLoaded(Lists.newArrayList(COMPETITIONS_SERVICE_DATA.values()));
+//            }
+//        }, SERVICE_LATENCY_IN_MILLIS);
+
+        ApiClient apiClient = new ApiClient();
+        ApiEndpoints endpoints = apiClient.establishConnection();
+
+        Call<List<Competition>> competitionsCall = endpoints.getCompetitions();
+        competitionsCall.enqueue(new Callback<List<Competition>>() {
             @Override
-            public void run() {
-                callback.onCompetitionsLoaded(Lists.newArrayList(COMPETITIONS_SERVICE_DATA.values()));
+            public void onResponse(Call<List<Competition>> call, Response<List<Competition>> response) {
+                if (!response.isSuccessful()) {
+                    // Procesar Error
+                    return;
+                }
+
+                List<Competition> competitionsResp = response.body();
+                if (competitionsResp.size() > 0) {
+                    // Enviar lista como respuesta
+                    callback.onCompetitionsLoaded(competitionsResp);
+                } else {
+
+                }
             }
-        }, SERVICE_LATENCY_IN_MILLIS);
+
+            @Override
+            public void onFailure(Call<List<Competition>> call, Throwable t) {
+                Log.d(TAG, "Falla en getCompetitions Api: " + t.getMessage());
+                callback.onDataNotAvailable();
+            }
+        });
     }
 
     @Override

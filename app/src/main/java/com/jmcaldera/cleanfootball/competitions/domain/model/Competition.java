@@ -1,99 +1,126 @@
 package com.jmcaldera.cleanfootball.competitions.domain.model;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.common.base.Objects;
+import com.google.gson.annotations.SerializedName;
 
+public class Competition{
 
-/**
- * Created by jmcaldera on 01/02/2017.
- */
+	@SerializedName("numberOfGames")
+	private int numberOfGames;
 
-public class Competition {
+	@SerializedName("lastUpdated")
+	private String lastUpdated;
 
-    @NonNull
-    private int mId;
+	@SerializedName("currentMatchday")
+	private int currentMatchday;
 
-    @Nullable
-    private String mCaption;
+	@SerializedName("_links")
+	private Links links;
 
-    @Nullable
-    private String mLeague;
+	@SerializedName("year")
+	private String year;
 
-    @Nullable
-    private String mYear;
+	@SerializedName("league")
+	private String league;
 
-    private int mCurrentMatchday;
+	@SerializedName("caption")
+	private String caption;
 
-    private String mLastUpdated;
+	@SerializedName("id")
+	private int id;
 
-    public Competition(@NonNull int id, @Nullable String caption, @Nullable String league,
-                       @Nullable String year, int currentMatchday, String lastUpdated) {
-        this.mId = id;
-        this.mCaption = caption;
-        this.mLeague = league;
-        this.mYear = year;
-        this.mCurrentMatchday = currentMatchday;
-        this.mLastUpdated = lastUpdated;
-    }
+	@SerializedName("numberOfTeams")
+	private int numberOfTeams;
 
-    public Competition(@NonNull int id, @Nullable String caption, @Nullable String league) {
-        this.mId = id;
-        this.mCaption = caption;
-        this.mLeague = league;
-    }
+	@SerializedName("numberOfMatchdays")
+	private int numberOfMatchdays;
 
-    @NonNull
-    public int getId() {
-        return mId;
-    }
+	public void setNumberOfGames(int numberOfGames){
+		this.numberOfGames = numberOfGames;
+	}
 
-    public void setId(@NonNull int id) {
-        this.mId = id;
-    }
+	public int getNumberOfGames(){
+		return numberOfGames;
+	}
 
-    @Nullable
-    public String getCaption() {
-        return mCaption;
-    }
+	public void setLastUpdated(String lastUpdated){
+		this.lastUpdated = lastUpdated;
+	}
 
-    public void setCaption(@Nullable String caption) {
-        this.mCaption = caption;
-    }
+	public String getLastUpdated(){
+		return lastUpdated;
+	}
 
-    @Nullable
-    public String getLeague() {
-        return mLeague;
-    }
+	public void setCurrentMatchday(int currentMatchday){
+		this.currentMatchday = currentMatchday;
+	}
 
-    public void setLeague(@Nullable String league) {
-        this.mLeague = league;
-    }
+	public int getCurrentMatchday(){
+		return currentMatchday;
+	}
 
-    @Nullable
-    public String getYear() {
-        return mYear;
-    }
+	public void setLinks(Links links){
+		this.links = links;
+	}
 
-    public void setYear(@Nullable String year) {
-        this.mYear = year;
-    }
+	public Links getLinks(){
+		return links;
+	}
 
-    public int getCurrentMatchday() {
-        return mCurrentMatchday;
-    }
+	public void setYear(String year){
+		this.year = year;
+	}
 
-    public void setCurrentMatchday(int currentMatchday) {
-        this.mCurrentMatchday = currentMatchday;
-    }
+	public String getYear(){
+		return year;
+	}
 
-    public String getLastUpdated() {
-        return mLastUpdated;
-    }
+	public void setLeague(String league){
+		this.league = league;
+	}
 
-    public void setLastUpdated(String lastUpdated) {
-        this.mLastUpdated = lastUpdated;
+	public String getLeague(){
+		return league;
+	}
+
+	public void setCaption(String caption){
+		this.caption = caption;
+	}
+
+	public String getCaption(){
+		return caption;
+	}
+
+	public void setId(int id){
+		this.id = id;
+	}
+
+	public int getId(){
+		return id;
+	}
+
+	public void setNumberOfTeams(int numberOfTeams){
+		this.numberOfTeams = numberOfTeams;
+	}
+
+	public int getNumberOfTeams(){
+		return numberOfTeams;
+	}
+
+	public void setNumberOfMatchdays(int numberOfMatchdays){
+		this.numberOfMatchdays = numberOfMatchdays;
+	}
+
+	public int getNumberOfMatchdays(){
+		return numberOfMatchdays;
+	}
+
+    public Competition(int id, @Nullable String caption, @Nullable String league) {
+        this.league = league;
+        this.caption = caption;
+        this.id = id;
     }
 
     @Override
@@ -101,18 +128,30 @@ public class Competition {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Competition competition = (Competition) obj;
-        return Objects.equal(mId, competition.mId) &&
-                Objects.equal(mLeague, competition.mLeague) &&
-                Objects.equal(mYear, competition.mYear);
+        return Objects.equal(id, competition.id) &&
+                Objects.equal(league, competition.league) &&
+                Objects.equal(year, competition.year);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mId, mLeague, mYear);
+        return Objects.hashCode(id, league, year);
     }
 
     @Override
-    public String toString() {
-        return mCaption;
-    }
+ 	public String toString(){
+		return 
+			"Competition{" + 
+			"numberOfGames = '" + numberOfGames + '\'' + 
+			",lastUpdated = '" + lastUpdated + '\'' + 
+			",currentMatchday = '" + currentMatchday + '\'' + 
+			",_links = '" + links + '\'' + 
+			",year = '" + year + '\'' + 
+			",league = '" + league + '\'' + 
+			",caption = '" + caption + '\'' + 
+			",id = '" + id + '\'' + 
+			",numberOfTeams = '" + numberOfTeams + '\'' + 
+			",numberOfMatchdays = '" + numberOfMatchdays + '\'' + 
+			"}";
+		}
 }
