@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.jmcaldera.cleanfootball.R;
 import com.jmcaldera.cleanfootball.util.ActivityUtils;
+import com.jmcaldera.cleanfootball.util.Injection;
 
 public class CompetitionDetailsActivity extends AppCompatActivity {
 
@@ -29,6 +30,7 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
 
         // Toolbar
         // TODO: Setear titulo del actionBar al caption de la liga
+        setTitle("Liga xxx");
         // Get id
         competitionId = getIntent().getIntExtra(EXTRA_COMPETITION_ID, 0);
         Log.d(TAG, "Competition Id is: " + competitionId);
@@ -47,7 +49,11 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
         ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), standingsFragment, R.id.contentFrame);
 
 //        mDetailsPresenter = new CompetitionDetailsPresenter(standingsFragment);
-        new CompetitionDetailsPresenter(standingsFragment);
+        // TODO: DI
+        new CompetitionDetailsPresenter(competitionId,
+                standingsFragment,
+                Injection.provideGetStandings(getApplicationContext()),
+                Injection.provideUseCaseHandler());
         Log.d(TAG, "CompActivity OnCreate");
     }
 
@@ -68,7 +74,9 @@ public class CompetitionDetailsActivity extends AppCompatActivity {
         if (fragment != null) {
             ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
-        new CompetitionDetailsPresenter((CompetitionDetailsContract.View) fragment);
+        new CompetitionDetailsPresenter(competitionId, (CompetitionDetailsContract.View) fragment,
+                Injection.provideGetStandings(getApplicationContext()),
+                Injection.provideUseCaseHandler());
         Log.d(TAG, "CompAct selectFrag");
     }
 }

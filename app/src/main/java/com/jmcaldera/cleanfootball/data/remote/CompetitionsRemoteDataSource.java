@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.common.collect.Lists;
+import com.jmcaldera.cleanfootball.competitiondetails.model.standings.Standing;
 import com.jmcaldera.cleanfootball.competitions.domain.model.Competition;
 import com.jmcaldera.cleanfootball.data.CompetitionsDataSource;
 import com.jmcaldera.cleanfootball.data.remote.api.ApiClient;
@@ -115,5 +116,40 @@ public class CompetitionsRemoteDataSource implements CompetitionsDataSource {
     @Override
     public void deleteAllCompetitions() {
         COMPETITIONS_SERVICE_DATA.clear();
+    }
+
+    @Override
+    public void getStandings(int competitionId, @NonNull final LoadStandingsCallback callback) {
+
+        ApiClient apiClient = new ApiClient();
+        ApiEndpoints endpoints = apiClient.establishConnection();
+
+        Call<Standing> standingCall = endpoints.getStanding(competitionId);
+
+        standingCall.enqueue(new Callback<Standing>() {
+            @Override
+            public void onResponse(Call<Standing> call, Response<Standing> response) {
+                if (!response.isSuccessful()) {
+                    // Manejar error
+                    return;
+                }
+
+                Standing standing = response.body();
+                if (standing != null) {
+                    callback.onStandingsLoaded(standing);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Standing> call, Throwable t) {
+                Log.d(TAG, "Falla en getStandings Api: " + t.getMessage());
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    @Override
+    public void refreshStandings(int competitionID) {
+
     }
 }

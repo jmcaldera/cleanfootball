@@ -123,6 +123,16 @@ public class Competition{
         this.id = id;
     }
 
+	public Competition(int id, @Nullable String caption, @Nullable String league,
+					   @Nullable String year, int currentMatchday, String lastUpdated) {
+		this.id = id;
+		this.caption = caption;
+		this.league = league;
+		this.year = year;
+		this.currentMatchday = currentMatchday;
+		this.lastUpdated = lastUpdated;
+	}
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

@@ -2,6 +2,9 @@ package com.jmcaldera.cleanfootball.competitiondetails;
 
 import com.jmcaldera.cleanfootball.BasePresenter;
 import com.jmcaldera.cleanfootball.BaseView;
+import com.jmcaldera.cleanfootball.competitiondetails.model.standings.StandingItem;
+
+import java.util.List;
 
 /**
  * Created by jmcaldera on 12/02/17.
@@ -14,7 +17,9 @@ public interface CompetitionDetailsContract {
         void setLoadingIndicator(boolean active);
 
         // TODO: crear standings model y fixtures model
-        void showStandings();
+        void showStandings(List<StandingItem> items);
+
+        void showLoadingStandingsError();
 
         void showFixtures();
 

@@ -14,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jmcaldera.cleanfootball.R;
+import com.jmcaldera.cleanfootball.competitiondetails.model.standings.StandingItem;
+
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -82,7 +85,12 @@ public class FixturesDetailFragment extends Fragment implements CompetitionDetai
     }
 
     @Override
-    public void showStandings() {
+    public void showStandings(List<StandingItem> items) {
+
+    }
+
+    @Override
+    public void showLoadingStandingsError() {
 
     }
 

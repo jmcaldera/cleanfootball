@@ -3,6 +3,7 @@ package com.jmcaldera.cleanfootball.data;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.jmcaldera.cleanfootball.competitiondetails.model.standings.Standing;
 import com.jmcaldera.cleanfootball.competitions.domain.model.Competition;
 
 import java.util.ArrayList;
@@ -31,12 +32,14 @@ public class CompetitionsRepository implements CompetitionsDataSource {
      * This variable has package local visibility so it can be accessed from tests.
      */
     Map<String, Competition> mCachedCompetitions;
+    Map<String, Standing> mCachedStandings;
 
     /**
      * Marks the cache as invalid, to force an update the next time data is requested. This variable
      * has package local visibility so it can be accessed from tests.
      */
     boolean mCacheIsDirty = false;
+    boolean mStandingsCacheIsDirty = false;
 
     // Evita instanciamiento directo
     private CompetitionsRepository(@NonNull CompetitionsDataSource competitionsRemoteDataSource,
@@ -158,6 +161,91 @@ public class CompetitionsRepository implements CompetitionsDataSource {
         mCompetitionsLocalDataSource.deleteAllCompetitions();
         for (Competition competition : competitions) {
             mCompetitionsLocalDataSource.saveCompetition(competition);
+        }
+    }
+
+    @Override
+    public void getStandings(final int competitionId, @NonNull final LoadStandingsCallback callback) {
+        checkNotNull(callback, "callback no puede ser null");
+
+        Log.d(TAG, "cached: " + mCachedStandings != null?"true":"false");
+        Log.d(TAG, "isDirty: " + mStandingsCacheIsDirty);
+
+        if (mCachedStandings != null && !mStandingsCacheIsDirty) {
+            if (mCachedStandings.containsKey(String.valueOf(competitionId))) {
+                Standing cacheStanding = mCachedStandings.get(String.valueOf(competitionId));
+                Log.d(TAG, "TRUE, " + cacheStanding.toString());
+//            if (cacheStanding != null) {
+                // Busca la tabla para la competicion dada, si esta en cache, la regresa
+                callback.onStandingsLoaded(cacheStanding);
+                Log.d(TAG, "Standing loaded from Cache");
+            }
+                return;
+//            } else {
+//                // si no esta en cache, entonces debe buscar en remote
+//                Log.d(TAG, "myCacheIsDirty");
+//                mStandingsCacheIsDirty = true;
+//            }
+        }
+        if (mStandingsCacheIsDirty) {
+            //Fetch from remote
+            Log.d(TAG, "Fetch remote");
+            getStandingsFromRemoteDataSource(competitionId, callback);
+        } else {
+            mCompetitionsLocalDataSource.getStandings(competitionId, new LoadStandingsCallback() {
+                @Override
+                public void onStandingsLoaded(Standing standing) {
+                    refreshStandingsCache(competitionId, standing);
+                    callback.onStandingsLoaded(standing);
+                    Log.d(TAG, "Standing loaded from LocalDataSource");
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    callback.onDataNotAvailable();
+                }
+            });
+        }
+    }
+
+    private void getStandingsFromRemoteDataSource(final int competitionId,
+                                                  @NonNull final LoadStandingsCallback callback) {
+
+        mCompetitionsRemoteDataSource.getStandings(competitionId, new LoadStandingsCallback() {
+            @Override
+            public void onStandingsLoaded(Standing standing) {
+                refreshStandingsCache(competitionId, standing);
+                refreshStandingsLocalDataSource(competitionId, standing);
+                callback.onStandingsLoaded(standing);
+                Log.d(TAG, "Standings loaded from RemoteDataSource");
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    private void refreshStandingsCache(int id, Standing standing) {
+        if (mCachedStandings == null) {
+            mCachedStandings = new LinkedHashMap<>();
+        }
+//        mCachedStandings.clear();
+        mCachedStandings.put(String.valueOf(id), standing);
+        mStandingsCacheIsDirty = false;
+    }
+
+    private void refreshStandingsLocalDataSource(int id, Standing standing) {
+        // Borrar el standing dado por id
+        //Guarda el nuevo standing
+    }
+
+    @Override
+    public void refreshStandings(int competitionID) {
+        if (mCachedStandings == null || mCachedStandings.isEmpty()
+                || !mCachedStandings.containsKey(String.valueOf(competitionID))) {
+            mStandingsCacheIsDirty = true;
         }
     }
 }

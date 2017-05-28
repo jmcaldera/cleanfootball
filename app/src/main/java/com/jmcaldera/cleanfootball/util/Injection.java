@@ -20,6 +20,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.jmcaldera.cleanfootball.UseCaseHandler;
+import com.jmcaldera.cleanfootball.competitiondetails.model.usecase.GetStandings;
 import com.jmcaldera.cleanfootball.competitions.domain.usecase.GetCompetitions;
 import com.jmcaldera.cleanfootball.data.CompetitionsDataSource;
 import com.jmcaldera.cleanfootball.data.CompetitionsRepository;
@@ -43,6 +44,10 @@ public class Injection {
 
     public static GetCompetitions provideGetCompetitions(@NonNull Context context) {
         return new GetCompetitions(provideCompetitionsRepository(context));
+    }
+
+    public static GetStandings provideGetStandings(@NonNull Context context) {
+        return new GetStandings(provideCompetitionsRepository(context));
     }
 
     public static UseCaseHandler provideUseCaseHandler() {

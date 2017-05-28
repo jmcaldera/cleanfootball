@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jmcaldera.cleanfootball.R;
+import com.jmcaldera.cleanfootball.competitiondetails.model.standings.StandingItem;
+import com.jmcaldera.cleanfootball.util.ScrollChildSwipeRefreshLayout;
+
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -29,6 +35,8 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
     private static final String ARGUMENT_COMPETITION_ID = "COMP_ID";
 
     private CompetitionDetailsContract.Presenter mPresenter;
+
+    int competitionId;
 
     public StandingsDetailFragment() {}
 
@@ -63,43 +71,89 @@ public class StandingsDetailFragment extends Fragment implements CompetitionDeta
         mPresenter = checkNotNull(presenter);
     }
 
+    TextView textView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.standings_frag, container, false);
 
-        TextView textView = (TextView) root.findViewById(R.id.standings_text);
+//        TextView textView = (TextView) root.findViewById(R.id.standings_text);
+        textView = (TextView) root.findViewById(R.id.standings_text);
         textView.setText("Standings");
 
         Button button = (Button) root.findViewById(R.id.standings_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO: corregir presenter null cuando se presiona home y se regresa de nuevo a la app
                 mPresenter.loadStandings(true);
             }
         });
 
+        // Set up progress indicator
+        final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
+                (ScrollChildSwipeRefreshLayout) root.findViewById(R.id.standings_refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(), R.color.colorAccent),
+                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
+        );
+
+        // TODO: chequear si esto es necesario
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadStandings(false);
+            }
+        });
         return root;
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
+    public void setLoadingIndicator(final boolean active) {
+        if (getView() == null) {
+            return;
+        }
 
+        final SwipeRefreshLayout refreshLayout =
+                (SwipeRefreshLayout) getView().findViewById(R.id.standings_refresh_layout);
+
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(active);
+            }
+        });
     }
 
     @Override
-    public void showStandings() {
+    public void showStandings(List<StandingItem> items) {
         if (getView() == null) {
             return;
         }
 //        Snackbar.make(getView(), "click en Standings", Snackbar.LENGTH_SHORT).show();
-        Toast.makeText(getView().getContext(), "click en Standings", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getView().getContext(), "click en Standings", Toast.LENGTH_SHORT).show();
+        textView.setText(items.get(0).toString());
+    }
+
+    @Override
+    public void showLoadingStandingsError() {
+        showMessage("Error al cargar Standings");
     }
 
     @Override
     public void showFixtures() {
 
+    }
+
+    private void showMessage(String msg) {
+        if (getView() == null) {
+            return;
+        }
+//        Snackbar.make(getView(), msg, Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(getView().getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -65,4 +65,14 @@ public class CompetitionsLocalDataSource implements CompetitionsDataSource {
     public void deleteAllCompetitions() {
 
     }
+
+    @Override
+    public void getStandings(int competitionId, @NonNull LoadStandingsCallback callback) {
+
+    }
+
+    @Override
+    public void refreshStandings(int competitionID) {
+
+    }
 }
