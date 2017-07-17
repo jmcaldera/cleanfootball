@@ -19,10 +19,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '25.0.0'
+//    buildToolsVersion '25.0.0'
 }
 
 dependencies {
+    compile project(':domain')
+    compile project(':data')
+    // compile project(':device') en caso de usar algo propio del telefono
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // App's dependencies
